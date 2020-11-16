@@ -1,4 +1,4 @@
-async function fetchMoviesJSON() {
+export async function fetchMoviesJSON() {
 	const response = await fetch("https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?q=get%3Anew7%3AUS&p=1&t=ns&st=adv", {
 		"method": "GET",
 		"headers": {
@@ -29,10 +29,10 @@ Manipulate object as desired
 			  k. 'type': movie or tv show
 			  l. 'unogsdate
 */	
-fetchMoviesJSON().then(obj => {
-	// Array of items
-	let items = obj.ITEMS; 
-	items.forEach(movie => {
-		console.log(movie.title + ': ' + movie.synopsis)
-	});
-});
+// fetchMoviesJSON().then(obj => {
+// 	// Array of items
+// 	let items = obj.ITEMS; 
+// 	items.forEach(movie => {
+// 		console.log(movie.title + ': ' + movie.synopsis)
+// 	});
+// });

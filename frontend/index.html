@@ -11,11 +11,66 @@
 </head>
 
 <body>
-    <div>
+    <div id='start'>
+        <section class="hero is-dark">
+            <div class="hero-body">
+                <di class=container>
+                    <h1 class="title is-1 has-text-danger has-text-centered" > Netflix Friend Finder</h1>
+                </div>
+            </div>
+        </section>
+
+
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <a class="navbar-item">
+                <img src="https://about.netflix.com/images/logo.png">
+              </a>
+            </div>
+          
+            <div id="" class="navbar-menu has-background-grey-dark">
+              <div class="navbar-start">
+                <a class="navbar-item has-text-white">
+                  Home
+                </a>
+          
+                <a class="navbar-item has-text-white">
+                  Find Friends
+                </a>
+          
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link has-text-white">
+                    About
+                  </a>
+                </div>
+              </div>
+          
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="buttons">
+                    <a class="button is-danger">
+                      <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-dark">
+                      Log in
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+
+
+        <!-- Use for data.js -->
+        <div class='columns is-multiline' id='movies'>
+
+        </div>
     </div>
 
     <!-- Include links to JavaScript files below         -->
     <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

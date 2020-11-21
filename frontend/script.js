@@ -6,13 +6,13 @@ window.onload = function () {
       $('#redirect').html("Logout");
       $('#redirect').attr('id', 'logout');
       $('#logout').on("click", handleLogoutBtnPress);
-      $('#home').on("click", handleHomeBtnPress);
+      $('#findFriends').on("click", handleFindFriendsBtnPress);
     } else {
       console.log("not logged in");
       $('#logout').html("Click here to Login or Sign Up");
       $('#logout').attr('id', 'redirect');
       $('#redirect').on("click", handleRedirectBtnPress);
-      $('#home').on("click", handleRedirectBtnPress);  // if not signed in, trying to go home navigates to login
+      $('#findFriends').on("click", handleRedirectBtnPress);  // if not signed in, trying to go home navigates to login
     }
   });
 
@@ -28,6 +28,6 @@ let handleRedirectBtnPress = function () {
   location.href = 'login.html';
 };
 
-let handleHomeBtnPress = function () {
-  location.href = 'home.html';
+let handleFindFriendsBtnPress = function () {
+  location.href = 'findFriends.html';
 };

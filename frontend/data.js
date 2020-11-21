@@ -67,6 +67,17 @@ async function fetchMoviesJSON() {
 
 fetchMoviesJSON().then(obj => {
 	let items = obj.ITEMS;
+	items = items.sort((a, b) => {   // Sort movies newest first
+		let dateA = Date.parse(a.unogsdate);
+		let dateB = Date.parse(b.unogsdate);
+		let comparison = 0;
+		if (dateA > dateB) {
+			comparison = -1;
+		} else if (dateA < dateB) {
+			comparison = 1;
+		}
+		return comparison;
+	});
 	items.forEach(movie => {
 		/*
 		movieObjects.push(movie);

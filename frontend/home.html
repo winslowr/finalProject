@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.css" />
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCCQlIy7VWTcpBX_xG9hoT1zcgCMXjMURY",
+            authDomain: "final-project-a892b.firebaseapp.com",
+            databaseURL: "https://final-project-a892b.firebaseio.com",
+            projectId: "final-project-a892b",
+            storageBucket: "final-project-a892b.appspot.com",
+            messagingSenderId: "449622922057",
+            appId: "1:449622922057:web:bf43186e35c0476f4bc098",
+            measurementId: "G-Q92Y0ESFFZ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+<body>
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class=container>
+                <h1 class="title is-1 has-text-danger has-text-centered"> Netflix Friend Finder</h1>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="https://about.netflix.com/images/logo.png">
+            </a>
+        </div>
+
+        <div id="" class="navbar-menu has-background-grey-dark">
+            <div class="navbar-start">
+                <a id="home" class="navbar-item has-text-white">
+                    Home
+                </a>
+
+                <a class="navbar-item has-text-white">
+                    Find Friends
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link has-text-white">
+                        About
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <button id="redirect" class="button is-danger">Click here to Login or Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="renderHome.js"></script>
+</body>

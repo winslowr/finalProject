@@ -3,3 +3,7 @@ div.columns.is-multiline {
     padding-left: 10px;
     padding-right: 10px
 }
+
+.card{
+    height: 500px;
+}

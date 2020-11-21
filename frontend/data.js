@@ -92,6 +92,10 @@ fetchMoviesJSON().then(obj => {
 	});
 });
 
+let handleClick = function(){
+	$('#movies').append(`<p> Yo </p>`)
+}
+
 $(function () {
-	//$(document).on("load", console.log(JSON.stringify(movieTitles)))
+	$(document).on("click",'#testSubmit', handleClick)
 }); 

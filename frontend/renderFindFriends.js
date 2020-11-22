@@ -41,14 +41,33 @@ let handleLogoutBtnPress = function () {
     firebase.auth().signOut();
 };
 
-let handleAddFriendBtnPress = function (e) {
+let handleAddFriendBtnPress = async function (e) {
+
+    const uid = e.target.getAttribute('data-uid');
+    const friendEmail = $('#enterEmail').val();
+
     const app = firebase.app();
     const db = firebase.firestore();
     const users = db.collection("users");
 
-    const uid = e.target.getAttribute('data-uid');
-    const email = $('#enterEmail').val();
-
-    console.log(users.doc(email).get());
-
+    const snapshot = await users.where('email', '==', friendEmail).get()
+    if (snapshot.empty) { // handling invalid email
+        console.log('here');
+        $('#enterEmail').attr('class', 'input is-danger');  // change text field color to red
+        $('#enterEmail').val('');  // clear input 
+        $('#enterEmail').attr('placeholder', 'Entered email was invalid');
+        return;
+    }
+    let newFriend;
+    snapshot.forEach(doc => { newFriend = doc.data(); newFriend.uid = doc.id });  // should only have one result in query 
+    if (newFriend.uid == uid) {  // handling adding your own email
+        $('#enterEmail').attr('class', 'input is-danger');
+        $('#enterEmail').val('');
+        $('#enterEmail').attr('placeholder', 'Entered email was your own');
+        return;
+    }
+    users.doc(uid).update({ friends: firebase.firestore.FieldValue.arrayUnion(friendEmail) });
+    $('#enterEmail').attr('class', 'input is-success');
+    $('#enterEmail').val('');
+    $('#enterEmail').attr('placeholder', 'Success! Add another?');
 }

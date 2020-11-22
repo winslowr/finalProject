@@ -1,42 +1,42 @@
-window.onload = function() {
- 
+window.onload = function () {
+
   $('#login').on("click", handleLoginBtnPress);
   $('#signup').on("click", handleSignupBtnPress);
 
-// Add a realtime listener
-firebase.auth().onAuthStateChanged(firebaseUser => {
-  if(firebaseUser) {
-    console.log(firebaseUser);
-    location.href = 'index.html';
-  } else {
-    console.log("not logged in");
-  }
-});
+  // Add a realtime listener
+  firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+      const db = firebase.firestore();
+      const users = db.collection("users");
+      users.doc(firebaseUser.uid).get().then(function (doc) {
+        if (!doc.exists) {
+          users.doc(firebaseUser.uid).set({ email: firebaseUser.email, friends: [] })
+            .then(function () { location.href = 'index.html'; });
+        } else {
+          location.href = 'index.html';
+        }
+      });
+    }
+  });
 
 
 };
 
-let handleLoginBtnPress = function() {
-  console.log("login");
+let handleLoginBtnPress = function () {
   let email = $('#txtEmail').val();
-  console.log(email);
   let pass = $('#txtPassword').val();
-  console.log(pass);
   const auth = firebase.auth();
   // Sign In
   const promise = auth.signInWithEmailAndPassword(email, pass);
   promise.catch(e => console.log(e.message));
 };
 
-let handleSignupBtnPress = function() {
-  console.log("sign up");
+let handleSignupBtnPress = function () {
   let email = $('#txtEmail').val();
-  console.log(email);
   let pass = $('#txtPassword').val();
-  console.log(pass);
   const auth = firebase.auth();
   // Sign In
   const promise = auth.createUserWithEmailAndPassword(email, pass);
   promise
-      .catch(e => console.log(e.message));
+    .catch(e => console.log(e.message));
 };

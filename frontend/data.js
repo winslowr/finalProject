@@ -22,6 +22,9 @@ let movieObjects = []; // Global array of movie objects
 let movieTitles = [];
 let movieImages = [];
 let movieDescription = [];
+let movieRatings = [];
+let movieTypes = []; 
+let movieRuntimes = [];
 
 const myList = document.querySelector('ul');
 const start = document.getElementById('start');
@@ -29,7 +32,7 @@ const start = document.getElementById('start');
 function cardCreator(movie) {
 	return `
 	<div class="column is-one-quarter">
-			<div class="card">
+			<div class="card" id="test">
 				<div class="container has-text-centered">
 				<div class="card-image">
 					<figure>
@@ -79,12 +82,14 @@ fetchMoviesJSON().then(obj => {
 		return comparison;
 	});
 	items.forEach(movie => {
-		/*
+		
 		movieObjects.push(movie);
 		movieTitles.push(movie.title);
 		movieImages.push(movie.image);
 		movieDescription.push(movie.synopsis);
-		*/
+		movieRatings.push(movie.rating)
+		movieRuntimes.push(movie.runtime)
+		movieTypes.push(movie.type)
 
 		let listyItem = `<p> ${movie.title}</p>`
 		let item = cardCreator(movie)
@@ -92,6 +97,116 @@ fetchMoviesJSON().then(obj => {
 	});
 });
 
+const handlePlayNow = function(event){
+	// Save ID of user
+		// let userID =
+	// render form based on this ID
+		// let form = renderForm(userID)
+	// $(this).parent().append(form)
+	let form = renderForm();
+	$('#renderForm').append(form);
+
+}
+
+const handleSelect = function(event){
+		// Retrieve answers to form
+		var sel = document.getElementById('userMovies');
+		let selectedMovie = sel.value;
+		console.log(selectedMovie)
+		let movieIndex; 
+		for (let i = 0; i < movieTitles.length; i++) {
+			if(selectedMovie == movieTitles[i]){
+				movieIndex = i; 
+			}
+		}
+		let selectedForm = renderSelected(movieIndex)
+		$('#renderForm').append(selectedForm);
+}
+
+const submitMovies = function(event){
+	$('#renderForm').empty();
+}
+
+
+
+const renderSelected = function(movieIndex){
+	return `
+	<div class="column is-two-thirds">
+			<div class="card" id="test">
+				<div class="container has-text-centered">
+				<div class="card-image">
+					<figure>
+						<img src="${movieImages[movieIndex]}" alt="Placeholder image">
+					</figure>
+				</div>
+				</div>
+				<div class="card-content">
+					<div class="media">
+						<div class="media-content">
+							<p class="title is-4">${movieTitles[movieIndex]}</p>
+						</div>
+					</div>
+
+					<div class="content">
+						<p> ${movieDescription[movieIndex]}</p>
+					</div>
+					
+					<div>
+					<p> <strong> Rating: </strong> ${movieRatings[movieIndex]}</p> 
+					</div>
+
+					<div>
+					<p> <strong> Runtime: </strong> ${movieRuntimes[movieIndex]}</p> 
+					</div>
+				
+					<p> Add matched users below here </p>
+			</div>
+	</div>
+	`
+}
+
+const renderForm = function(userID){
+	return `
+		<div class="column is-one-third">
+		<div class="select is-multiple">
+			<section class="hero is-danger is-bold">
+				<div hero-body>
+					<h1 class="title is-3 has-text-centered"> Select a movie you would watch with a friend! </h1>
+				</div>
+			</section>
+			<div id="selection">
+			<select class = "has-text-centeredi" id="userMovies" multiple size="20">
+				<option name="${movieTitles[0]}"> ${movieTitles[0]} </option>
+				<option name="${movieTitles[1]}"> ${movieTitles[1]} </option>
+				<option name="${movieTitles[2]}"> ${movieTitles[2]} </option>
+				<option name="${movieTitles[3]}"> ${movieTitles[3]} </option>
+				<option name="${movieTitles[4]}"> ${movieTitles[4]} </option>
+				<option name="${movieTitles[5]}"> ${movieTitles[5]} </option>
+				<option name="${movieTitles[6]}"> ${movieTitles[6]} </option>
+				<option name="${movieTitles[7]}"> ${movieTitles[7]} </option>
+				<option name="${movieTitles[8]}"> ${movieTitles[8]} </option>
+				<option name="${movieTitles[9]}"> ${movieTitles[9]} </option>
+				<option name="${movieTitles[10]}"> ${movieTitles[10]} </option>
+				<option name="${movieTitles[11]}"> ${movieTitles[11]} </option>
+				<option name="${movieTitles[12]}"> ${movieTitles[12]} </option>
+				<option name="${movieTitles[13]}"> ${movieTitles[13]} </option>
+				<option name="${movieTitles[14]}"> ${movieTitles[14]} </option>
+				<option name="${movieTitles[15]}"> ${movieTitles[15]} </option>
+				<option name="${movieTitles[16]}"> ${movieTitles[16]} </option>
+				<option name="${movieTitles[17]}"> ${movieTitles[17]} </option>
+				<option name="${movieTitles[18]}"> ${movieTitles[18]} </option>
+				<option name="${movieTitles[19]}"> ${movieTitles[19]} </option>
+			</select>
+			</div>
+
+			<input id="selectionDone" type="submit" value="Go Back">
+		  </div>
+		  </div>
+	`
+}
+
 $(function () {
-	//$(document).on("load", console.log(JSON.stringify(movieTitles)))
+	$(document).on("click", '#testSubmit', handlePlayNow)
+	$(document).on("click", '#selectionDone', submitMovies)
+	$(document).on("click", '#renderForm', handleSelect)
 }); 

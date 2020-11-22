@@ -13,9 +13,11 @@ div.columns.is-multiline {
     width: 100%
 }
 
-.column{
-    padding-top: 30px;
-    padding-right: 30px;
-    padding-bottom: 1000px;
-    padding-left: 30px;
+#movies{
+    background-color: rgb(180, 29, 19)
+}
+
+#mainTitle{
+    color: rgb(180, 29, 19);
+    font-size: 70px; 
 }

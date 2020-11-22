@@ -4,9 +4,6 @@ div.columns.is-multiline {
     padding-right: 10px
 }
 
-.card{
-    height: 500px;
-}
 
 #userMovies {
     margin: 0 auto;
@@ -14,8 +11,9 @@ div.columns.is-multiline {
 }
 
 .column{
-    padding-top: 30px;
-    padding-right: 30px;
-    padding-bottom: 1000px;
-    padding-left: 30px;
+    display: flex;
+}
+
+.has-background-netflix {
+    background-color: rgba(180,19,29);
 }

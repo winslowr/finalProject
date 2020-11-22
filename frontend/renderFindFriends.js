@@ -67,4 +67,7 @@ let handleAddFriendBtnPress = async function (e) {
         return;
     }
     users.doc(uid).update({ friends: firebase.firestore.FieldValue.arrayUnion(friendEmail) });
+    $('#enterEmail').attr('class', 'input is-success');
+    $('#enterEmail').val('');
+    $('#enterEmail').attr('placeholder', 'Success! Add another?');
 }

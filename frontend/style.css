@@ -10,10 +10,11 @@ div.columns.is-multiline {
     width: 100%
 }
 
-.column{
-    display: flex;
+#movies{
+    background-color: rgb(180, 29, 19)
 }
 
-.has-background-netflix {
-    background-color: rgba(180,19,29);
+#mainTitle{
+    color: rgb(180, 29, 19);
+    font-size: 70px; 
 }

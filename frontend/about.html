@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <title>Login</title>
+    <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.css" />
+</head>
+
+<body>
+
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class=container>
+                <h1 class="title is-1 has-text-danger has-text-centered" > Netflix Friend Finder</h1>
+            </div>
+        </div>
+    </section>
+
+    <br>
+    <button onclick="window.location.href='/index.html'" class="button is-danger">Return Home</button>
+    <br>
+
+
+    <div class="tile is-parent">
+        <article class="tile is-child notification is-danger">
+          <p class="title">About</p>
+          <div class="content">
+            This is the Netflix Friend Finder - the best way to meet new friends and 
+            find the latest movies to watch on Netflix! Utilizing the unofficial Netflix 
+            online Global Search (uNoGS) API, our app pulls the most recently added Netflix movies
+            and displays them on our homepage in real-time. Our app uses Firebase as its backend to 
+            authenticate users upon logging in and allows new users to sign up for an account. 
+            Once logged in, a user can click on the "Find Friends" tab on the navigation bar to start 
+            finding friends to watch new movies with! The app also stores user data locally using Firebase
+            Cloud Firestore.
+            </div>
+            <br>
+            <div class="content">
+                <p class="subtitle">
+                Creators: Robert Winslow, Trey Tanjuatco and Kyle Maatallah
+                </p>
+            </div>
+        </article>
+      </div>
+  
+    
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script type='module' src="about.js"></script>
+
+</body>
+
+</html>

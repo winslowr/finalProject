@@ -1,5 +1,7 @@
 window.onload = function () {
 
+  $('#about').on("click", handleAboutBtnPress);
+
   firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       console.log(firebaseUser);
@@ -31,3 +33,7 @@ let handleRedirectBtnPress = function () {
 let handleFindFriendsBtnPress = function () {
   location.href = 'findFriends.html';
 };
+
+let handleAboutBtnPress = function () {
+  location.href = 'about.html';
+}

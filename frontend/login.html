@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <script src="node_modules/jquery/dist/jquery.js"> </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.css" />
   <link rel="stylesheet" href="./style.css" />
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -35,8 +35,8 @@
 
 <body>
 
-  <section class="hero is-black">
-    <div class="hero-body">
+  <section class="hero">
+    <div id="hero" class="hero-body">
       <div class=container>
         <h1 id="mainTitle" class="title is-1 has-text-centered">Netflix Friend Finder</h1>
       </div>
@@ -56,20 +56,11 @@
         <div class="field">
           <p class="control has-icons-left has-icons-right">
             <input id="txtEmail" class="input" type="text" placeholder="Email">
-            <!-- <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-          <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
-          </span> -->
           </p>
         </div>
         <div class="field">
           <p class="control has-icons-left">
             <input id="txtPassword" class="input" type="password" placeholder="Password">
-            <!-- <span class="icon is-small is-left">
-            <i class="fas fa-lock"></i>
-          </span> -->
           </p>
         </div>
         <div class="field">

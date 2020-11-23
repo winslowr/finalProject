@@ -10,14 +10,36 @@ div.columns.is-multiline {
     width: 100%
 }
 
-#movies{
-    background-color: rgb(180, 29, 19)
+#movies, #searchBar {
+    background: radial-gradient(#fff, #aaa);
 }
 
-#mainTitle{
-    color: rgb(180, 29, 19);
-    font-size: 70px; 
+@import url('https://fonts.googleapis.com/css?family=Roboto:700,900');
+
+#hero {
+    background: radial-gradient(#fff, #aaa);
+    background-size: 100vw 100vh; 
+    overflow: hidden;
+    /* padding-top: 40vh; */
 }
+
+#mainTitle {
+        color:  rgb(180, 29, 19);
+        text-align: center;
+        font-family: 'Roboto';
+        font-size: 12vmin;
+        font-weight: 700;
+        text-shadow: 8px 8x 16px grey;
+        animation: netflix_style 3.5s infinite;
+        outline: none;
+        white-space: nowrap;
+}
+      
+.button {
+    background-color: rgb(180, 29, 19);
+    color: white;
+}
+
 
 #searchBar {
     background-color: rgb(180, 29, 19);
@@ -36,4 +58,9 @@ div.columns.is-multiline {
     width: 400px;
     background-color: white; 
     padding-bottom: 20px;
+}
+
+.card {
+    padding-top: 10px;
+    height: 520px;
 }

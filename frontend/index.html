@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Final Project</title>
   <!-- Include links to CSS stylesheets below -->
-  <script src="node_modules/jquery/dist/jquery.js"> </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.css" />
   <link rel="stylesheet" href="./style.css" />
 
@@ -40,8 +40,8 @@
 
   </div>
   <div id='start'>
-    <section class="hero is-black">
-      <div class="hero-body">
+    <section class="hero">
+      <div id="hero" class="hero-body">
         <div class=container>
           <h1 class="title is-1 has-text-centered" id="mainTitle">Netflix Friend Finder</h1>
         </div>
@@ -50,44 +50,6 @@
 
     <div id="navbar"></div>
 
-    <!-- <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <img src="https://about.netflix.com/images/logo.png">
-        </a>
-      </div>
-
-      <div id="navigationText" class="navbar-menu has-background-grey-dark">
-        <div class="navbar-start">
-          <a class="navbar-item has-text-white">
-            Home
-          </a>
-
-          <a id="findFriends" class="navbar-item has-text-white">
-            Find Friends
-          </a>
-
-          <div class="navbar-item is-hoverable">
-            <a id="about" class="navbar-item has-text-white">
-              About
-            </a>
-          </div>
-          <div>
-            <!-- <input type="submit" value="test form button" id="testSubmit"> -->
-          </div>
-
-        </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <button style="background-color: rgb(180, 29, 19)" id="redirect" class="button">Login or Sign
-                Up</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
     <div id="searchBar">
       <form>
         <input type="search" placeholder="Search for new movies" id="searchForm">

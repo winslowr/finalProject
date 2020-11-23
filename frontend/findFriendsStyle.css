@@ -6,12 +6,30 @@ input#enterEmail {
     background-color: rgba(180,19,29);
 }
 
-#mainTitle{
-    color: rgb(180, 29, 19);
-    font-size: 70px; 
+#mainTitle {
+    color:  rgb(180, 29, 19);
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 12vmin;
+    font-weight: 700;
+    text-shadow: 8px 8x 16px grey;
+    animation: netflix_style 3.5s infinite;
+    outline: none;
+    white-space: nowrap;
+}
+
+#topSection {
+    background: radial-gradient(#fff, #aaa);
 }
 
 .button {
     background-color: rgb(180, 29, 19);
     color: white;
+}
+
+#hero {
+    background: radial-gradient(#fff, #aaa);
+    background-size: 100vw 100vh; 
+    overflow: hidden;
+    /* padding-top: 40vh; */
 }

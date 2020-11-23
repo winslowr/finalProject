@@ -36,7 +36,7 @@ function cardCreator(movie) {
 				<div class="container has-text-centered">
 				<div class="card-image">
 					<figure>
-						<img src="${movie.image}" alt="Placeholder image">
+						<img style="border: 2px solid white" src="${movie.image}" alt="Placeholder image">
 					</figure>
 				</div>
 				</div>

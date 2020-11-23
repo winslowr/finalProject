@@ -10,6 +10,7 @@ window.onload = function () {
             $('body').append(`<div id="uid" data-uid=${firebaseUser.uid}></div>`)  // empty div for accessing uid
             // login button configuration
             $('#navbar').append(createNavbar);
+            $('#userEmail').append(`<p>${firebaseUser.email}</p>`);
             $('#redirect').html("Logout");
             $('#redirect').attr('id', 'logout');
             $('#logout').on("click", handleLogoutBtnPress);
@@ -22,10 +23,14 @@ window.onload = function () {
             $('body').on('click', '#submitMovies', handleSaveWatchlistBtnPress);
             $('body').on('click', '#cancel', handleCancelBtnPress);
             $('body').on('click', '.removeMovie', handleRemoveMovieBtnPress);
+            $('body').on('click', '#showFriends', handleShowFriendsBtnPress);
+            $('body').on('click', '#hideFriends', handleHideFriendsBtnPress);
         }
     });
 
 };
+
+// RENDERING
 
 let renderDashboardView = function (uid) {
     const dashboard = $('<div id="dashboard"></div>');
@@ -136,13 +141,18 @@ let renderWatchlist = function (uid) {
     column.append(box);
     const container = $('<div class="container"></div>');
     box.append(container);
-    container.append($('<h1 class="title">Your Watchlist</h1>'));
+    const titleColumns = $('<div class="columns is-gapless"><div class="column is-one-third"><h1 class="title">Your Watchlist</h1></div></div>');
+    titleColumns.append($('<div class="column"><button id="showFriends" class="button">Show Friends</button></div>'));
+    container.append(titleColumns);
     // const uid = $('#uid').data('uid');
     const db = firebase.firestore();
     const users = db.collection("users");
     users.doc(uid).get().then(function (snapshot) {
         const watchlist = snapshot.data().watchlist;
         watchlist.forEach(function (movie) {
+            if (movie === "") {
+                return;
+            }
             const movieName = movie.replace(/\W/g, '');
             const article = $(`<article name=${movieName} class="media"></media>`);
             container.append(article);
@@ -150,11 +160,38 @@ let renderWatchlist = function (uid) {
             article.append(div);
             const content = $('<div class="content"></div>');
             div.append(content);
-            article.append(`<div class="media-right"><button class="button is-link removeMovie" data-name=${movieName}>Remove</button></div>`)
-            content.append($(`<p>${movie}</p>`));
+            article.append(`<div class="media-right"><button class="button removeMovie" data-name=${movieName}>Remove</button></div>`)
+            content.append($(`<p><strong>${movie}</strong></p>`));
         });
     });
     return columns;
+}
+
+let renderFriendsView = async function () {
+    $('#showFriends').replaceWith($('<button id="hideFriends" class="button">Hide Friends</button>'));
+    const uid = $('#uid').data('uid');
+    const db = firebase.firestore();
+    const users = db.collection("users");
+    const userData = await users.doc(uid).get();
+    const userFriends = userData.data().friends;
+    if (userFriends.length == 0) { return; }
+    const userWatchlist = userData.data().watchlist;
+    for (const friendEmail of userFriends) {
+        const friendData = await users.where('email', '==', friendEmail).get();
+        let friendWatchlist;
+        friendData.forEach((doc) => {
+            friendWatchlist = doc.data().watchlist;
+        });
+        if (friendWatchlist.length == 0) { continue; }
+        for (const movie of friendWatchlist) {
+            if (movie === "") { continue; }
+            if (userWatchlist.includes(movie)) {
+                const movieName = movie.replace(/\W/g, '');
+                const text = $(`[name=${movieName}]`).find('div.content');
+                text.append(`<p class="friendEmail">${friendEmail}</p>`);
+            }
+        }
+    }
 }
 
 function renderFindFriendsBox(uid) {
@@ -173,7 +210,7 @@ function renderFindFriendsBox(uid) {
     container.append(`
         <div class="field">
             <div class="control">
-                <button id="addFriend" data-uid="${uid}" class="button is-link">Add Friend</button>
+                <button id="addFriend" data-uid="${uid}" class="button">Add Friend</button>
             </div>
         </div>`);
     return column;
@@ -189,14 +226,17 @@ function renderMatchTestBox(uid) {
     container.append(`
         <div class="field">
             <div class="control">
-                <button id="takeMatchTest" data-uid="${uid}" class="button is-link">Take the Quiz</button>
+                <button id="takeMatchTest" data-uid="${uid}" class="button">Take the Quiz</button>
             </div>
         </div>`);
     return column;
 }
 
+// HANDLERS
+
 let handleLogoutBtnPress = function () {
     firebase.auth().signOut();
+    $('#userEmail').empty();
 }
 
 let handleAddFriendBtnPress = async function (e) {
@@ -283,4 +323,16 @@ let handleRemoveMovieBtnPress = function (e) {
         watchlist: firebase.firestore.FieldValue.arrayRemove(movieTitle)
     }).then(function () { $(`[name=${movieName}]`).remove() });
 
+}
+
+let handleShowFriendsBtnPress = function (e) {
+    renderFriendsView();
+}
+
+let handleHideFriendsBtnPress = function (e) {
+    const friendEmails = $('.friendEmail');
+    for (const email of friendEmails) {
+        email.remove();
+    }
+    $('#hideFriends').replaceWith($('<button id="showFriends" class="button">Show Friends</button>'));
 }

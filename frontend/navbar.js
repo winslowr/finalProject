@@ -14,8 +14,8 @@ export const createNavbar = function () {
             Home
             </a>
 
-            <a id="findFriends" class="navbar-item has-text-white">
-            Find Friends
+            <a id="dashboard" class="navbar-item has-text-white">
+            Dashboard
             </a>
 
             <div class="navbar-item has-dropdown is-hoverable">
@@ -25,10 +25,13 @@ export const createNavbar = function () {
             </div>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-            <div class="buttons">
-                <button id="redirect" style="background-color: rgb(180, 29, 19)" class="button is-danger">Login or Sign Up</button>
+            <div class="navbar-item has-text-white">
+                <div id="userEmail"></div>
             </div>
+            <div class="navbar-item">
+                <div class="buttons">
+                    <button id="redirect" style="background-color: rgb(180, 29, 19)" class="button is-danger">Login or Sign Up</button>
+                </div>
             </div>
         </div>
         </div>

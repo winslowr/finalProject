@@ -7,32 +7,30 @@ window.onload = function () {
 
   firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-      console.log(firebaseUser);
+      $('#userEmail').append(`<p>${firebaseUser.email}</p>`);
       $('#redirect').html("Logout");
       $('#redirect').attr('id', 'logout');
       $('#logout').on("click", handleLogoutBtnPress);
-      $('#findFriends').on("click", handleFindFriendsBtnPress);
+      $('#dashboard').on("click", handleDashboardBtnPress);
     } else {
-      console.log("not logged in");
       $('#logout').html("Login or Sign Up");
       $('#logout').attr('id', 'redirect');
       $('#redirect').on("click", handleRedirectBtnPress);
-      $('#findFriends').on("click", handleRedirectBtnPress);  // if not signed in, trying to go home navigates to login
+      $('#dashboard').on("click", handleRedirectBtnPress);  // if not signed in, trying to go home navigates to login
     }
   });
 
 }
 
 let handleLogoutBtnPress = function () {
-  console.log("logout");
   firebase.auth().signOut();
+  $('#userEmail').empty();
 };
 
 let handleRedirectBtnPress = function () {
-  console.log("redirecting...");
   location.href = 'login.html';
 };
 
-let handleFindFriendsBtnPress = function () {
-  location.href = 'findFriends.html';
+let handleDashboardBtnPress = function () {
+  location.href = 'dashboard.html';
 };

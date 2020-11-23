@@ -35,6 +35,10 @@ div.columns.is-multiline {
         white-space: nowrap;
 }
       
+.button {
+    background-color: rgb(180, 29, 19);
+    color: white;
+}
 
 
 #searchBar {

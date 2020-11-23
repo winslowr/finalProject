@@ -5,3 +5,13 @@ input#enterEmail {
 .has-background-netflix {
     background-color: rgba(180,19,29);
 }
+
+#mainTitle{
+    color: rgb(180, 29, 19);
+    font-size: 70px; 
+}
+
+.button {
+    background-color: rgb(180, 29, 19);
+    color: white;
+}

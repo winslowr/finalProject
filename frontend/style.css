@@ -19,13 +19,7 @@ div.columns.is-multiline {
     font-size: 70px; 
 }
 
-#signup {
+.button {
     background-color: rgb(180, 29, 19);
     color: white;
-}
-
-#login {
-    background-color: rgb(180, 29, 19);
-    color: white;
-
 }

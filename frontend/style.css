@@ -10,7 +10,7 @@ div.columns.is-multiline {
     width: 100%
 }
 
-#movies {
+#movies, #searchBar {
     background: radial-gradient(#fff, #aaa);
 }
 

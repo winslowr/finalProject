@@ -17,6 +17,7 @@ window.onload = function () {
             $('body').on('click', '#addFriend', handleAddFriendBtnPress);
         }
     });
+
 };
 
 let renderTopSection = function (uid) { // render area for adding new freinds

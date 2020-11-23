@@ -2,10 +2,9 @@ import { createNavbar } from './navbar.js';
 
 window.onload = function () {
 
-  $('#navbar').append(createNavbar);
-  // $('#about').on("click", handleAboutBtnPress);
+$('#navbar').append(createNavbar);
 
-  firebase.auth().onAuthStateChanged(firebaseUser => {
+firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       console.log(firebaseUser);
       $('#redirect').html("Logout");
@@ -34,5 +33,5 @@ let handleRedirectBtnPress = function () {
 };
 
 let handleFindFriendsBtnPress = function () {
-  location.href = 'findFriends.html';
+    location.href = 'findFriends.html';
 };

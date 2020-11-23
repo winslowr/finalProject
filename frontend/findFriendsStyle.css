@@ -1,3 +1,7 @@
 input#enterEmail {
     width: 400px
 }
+
+.has-background-netflix {
+    background-color: rgba(180,19,29);
+}

@@ -205,8 +205,63 @@ const renderForm = function(userID){
 	`
 }
 
+let matches = [];
+
+let debounce = function(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
+let search = debounce(function(event){
+	let text = event.target.value;	
+	getValues(text)
+	.then((list)=>{
+		if( list.length == 0){
+			$('#autocompleteUL').empty();
+			let item = "No matches found"
+			$('#autocompleteUL').append(item);
+		}else{
+			$('#autocompleteUL').empty();
+			for (let i = 0; i < list.length; i++) {
+				let item = renderListElement(list[i]);
+				$('#autocompleteUL').append(item);
+			}
+		}
+	})
+	.catch(err=>console.warn(err));
+}, 600);
+
+let getValues = function(txt){
+	return new Promise((resolve, reject)=>{
+		matches = [];
+		setTimeout((function(){
+			let t = '^' + this.toString();
+			let pattern = new RegExp(t, 'i'); 
+			let matches = movieTitles.filter(term => pattern.test(term));
+			resolve(matches);
+		}).bind(txt), 500);
+	})
+}
+
+let renderListElement = function(title){
+	return `
+	<li> ${title} </li>
+	`
+}
+
 $(function () {
 	$(document).on("click", '#testSubmit', handlePlayNow)
 	$(document).on("click", '#selectionDone', submitMovies)
 	$(document).on("click", '#renderForm', handleSelect)
+	$(document).on("input", '#searchForm', search)
 }); 

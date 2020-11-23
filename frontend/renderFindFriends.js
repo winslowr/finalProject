@@ -1,4 +1,5 @@
 import { createNavbar } from './navbar.js';
+import { movieObjects } from './data.js';
 
 window.onload = function () {
 
@@ -10,14 +11,40 @@ window.onload = function () {
             $('#navbar').append(createNavbar);
             $('#redirect').html("Logout");
             $('#redirect').attr('id', 'logout');
-            // friend finder setup
             $('#logout').on("click", handleLogoutBtnPress);
-            $('#root').append(renderTopSection(firebaseUser.uid)); // have to pass user info in this way since it cant be done through handler
-            $('#root').append(renderBottomSection(firebaseUser.uid));
+            // friend finder setup
+            renderDashboardView(firebaseUser.uid);
             $('body').on('click', '#addFriend', handleAddFriendBtnPress);
+            $('body').on('click', '#takeMatchTest', handleMatchTestBtnPress);
         }
     });
 };
+
+let renderDashboardView = function (uid) {
+    $('#root').append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
+    $('#root').append(renderBottomSection(uid));
+}
+
+let renderFormView = function () {
+    const columns = $('<div class="columns"></div>');
+    columns.append(renderSelectionPanel());
+    return columns;
+}
+
+let renderSelectionPanel = function () {
+    const column = $('<div class="column is-one-third"></div>');
+    const div = $('<div class="select is-multiple"></div>');
+    column.append(div);
+    div.append($(`<section class="hero is-danger is-bold">
+				    <div hero-body>
+					    <h1 class="title is-3 has-text-centered"> Select a movie you would watch with a friend! </h1>
+				    </div>
+			    </section>)`));
+    const select = $('<select class="is-hovered" multiple size="20"></select>');
+    div.append(select);
+    movieObjects.forEach(movie => select.append(`<option value=${movie.title}>${movie.title}</option>`));
+    return column;
+}
 
 let renderTopSection = function (uid) { // render area for adding new freinds
     const section = $('<div id="topSection" class="section has-background-netflix"></div>');
@@ -80,7 +107,7 @@ function renderMatchTestBox(uid) {
 
 let handleLogoutBtnPress = function () {
     firebase.auth().signOut();
-};
+}
 
 let handleAddFriendBtnPress = async function (e) {
 
@@ -111,4 +138,8 @@ let handleAddFriendBtnPress = async function (e) {
     $('#enterEmail').attr('class', 'input is-success');
     $('#enterEmail').val('');
     $('#enterEmail').attr('placeholder', 'Success! Add another?');
+}
+
+let handleMatchTestBtnPress = async function (e) {
+    $('#root').replaceWith(renderFormView());
 }

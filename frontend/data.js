@@ -18,12 +18,12 @@ Manipulate object as desired
 			  l. 'unogsdate
 */
 
-let movieObjects = []; // Global array of movie objects
+export let movieObjects = []; // Global array of movie objects
 let movieTitles = [];
 let movieImages = [];
 let movieDescription = [];
 let movieRatings = [];
-let movieTypes = []; 
+let movieTypes = [];
 let movieRuntimes = [];
 
 const myList = document.querySelector('ul');
@@ -82,7 +82,7 @@ fetchMoviesJSON().then(obj => {
 		return comparison;
 	});
 	items.forEach(movie => {
-		
+
 		movieObjects.push(movie);
 		movieTitles.push(movie.title);
 		movieImages.push(movie.image);
@@ -97,39 +97,39 @@ fetchMoviesJSON().then(obj => {
 	});
 });
 
-const handlePlayNow = function(event){
+const handlePlayNow = function (event) {
 	// Save ID of user
-		// let userID =
+	// let userID =
 	// render form based on this ID
-		// let form = renderForm(userID)
+	// let form = renderForm(userID)
 	// $(this).parent().append(form)
 	let form = renderForm();
 	$('#renderForm').append(form);
 
 }
 
-const handleSelect = function(event){
-		// Retrieve answers to form
-		var sel = document.getElementById('userMovies');
-		let selectedMovie = sel.value;
-		console.log(selectedMovie)
-		let movieIndex; 
-		for (let i = 0; i < movieTitles.length; i++) {
-			if(selectedMovie == movieTitles[i]){
-				movieIndex = i; 
-			}
+const handleSelect = function (event) {
+	// Retrieve answers to form
+	var sel = document.getElementById('userMovies');
+	let selectedMovie = sel.value;
+	console.log(selectedMovie)
+	let movieIndex;
+	for (let i = 0; i < movieTitles.length; i++) {
+		if (selectedMovie == movieTitles[i]) {
+			movieIndex = i;
 		}
-		let selectedForm = renderSelected(movieIndex)
-		$('#renderForm').append(selectedForm);
+	}
+	let selectedForm = renderSelected(movieIndex)
+	$('#renderForm').append(selectedForm);
 }
 
-const submitMovies = function(event){
+const submitMovies = function (event) {
 	$('#renderForm').empty();
 }
 
 
 
-const renderSelected = function(movieIndex){
+const renderSelected = function (movieIndex) {
 	return `
 	<div class="column is-two-thirds">
 			<div class="card" id="test">
@@ -165,7 +165,7 @@ const renderSelected = function(movieIndex){
 	`
 }
 
-const renderForm = function(userID){
+const renderForm = function (userID) {
 	return `
 		<div class="column is-one-third">
 		<div class="select is-multiple">
@@ -175,7 +175,7 @@ const renderForm = function(userID){
 				</div>
 			</section>
 			<div id="selection">
-			<select class = "has-text-centeredi" id="userMovies" multiple size="20">
+			<select class = "has-text-centered" id="userMovies" multiple size="20">
 				<option name="${movieTitles[0]}"> ${movieTitles[0]} </option>
 				<option name="${movieTitles[1]}"> ${movieTitles[1]} </option>
 				<option name="${movieTitles[2]}"> ${movieTitles[2]} </option>

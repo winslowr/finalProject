@@ -21,6 +21,7 @@ window.onload = function () {
             $('body').on('click', '#addMovie', handleAddToWatchlistBtnPress);
             $('body').on('click', '#submitMovies', handleSaveWatchlistBtnPress);
             $('body').on('click', '#cancel', handleCancelBtnPress);
+            $('body').on('click', '.removeMovie', handleRemoveMovieBtnPress);
         }
     });
 
@@ -28,8 +29,10 @@ window.onload = function () {
 
 let renderDashboardView = function (uid) {
     const dashboard = $('<div id="dashboard"></div>');
-    dashboard.append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
-    dashboard.append(renderBottomSection(uid));
+    const section = $('<div id="topSection" class="section has-background-netflix"></div>');
+    dashboard.append(section);
+    section.append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
+    section.append(renderWatchlist(uid));
     return dashboard;
 }
 
@@ -117,24 +120,41 @@ let renderSelectionControlPanel = function () {
 }
 
 let renderTopSection = function (uid) { // render area for adding new freinds
-    const section = $('<div id="topSection" class="section has-background-netflix"></div>');
     const columns = $('<div class="columns"></div>');
     const findFriendsBox = renderFindFriendsBox(uid);
     const takeMatchTest = renderMatchTestBox(uid);
     columns.append(findFriendsBox);
     columns.append(takeMatchTest);
-    section.append(columns);
-    return section;
+    return columns;
 }
 
-let renderBottomSection = function (uid) {
-    const section = $('<div id="bottomSection" class="section has-background-light"></div>');
-    section.append($('<h1 class="title">Your Watchlist</h1>'));
-    const box = $('<div class="box"></div>');
-    section.append(box);
-    box.append('<h1>My Movies</h1>');
-    return section;
-
+let renderWatchlist = function (uid) {
+    const columns = $('<div class="columns is-centered"></div>');
+    const column = $('<div class="column is-two-thirds"></div>');
+    columns.append(column);
+    const box = $('<div id="watchlist" class="box"></div>');
+    column.append(box);
+    const container = $('<div class="container"></div>');
+    box.append(container);
+    container.append($('<h1 class="title">Your Watchlist</h1>'));
+    // const uid = $('#uid').data('uid');
+    const db = firebase.firestore();
+    const users = db.collection("users");
+    users.doc(uid).get().then(function (snapshot) {
+        const watchlist = snapshot.data().watchlist;
+        watchlist.forEach(function (movie) {
+            const movieName = movie.replace(/\W/g, '');
+            const article = $(`<article name=${movieName} class="media"></media>`);
+            container.append(article);
+            const div = $('<div class="media-content"></div>');
+            article.append(div);
+            const content = $('<div class="content"></div>');
+            div.append(content);
+            article.append(`<div class="media-right"><button class="button is-link removeMovie" data-name=${movieName}>Remove</button></div>`)
+            content.append($(`<p>${movie}</p>`));
+        });
+    });
+    return columns;
 }
 
 function renderFindFriendsBox(uid) {
@@ -251,4 +271,16 @@ let handleSaveWatchlistBtnPress = function (e) {
 let handleCancelBtnPress = function (e) {
     const uid = $('#uid').data('uid');
     $('#formView').replaceWith(renderDashboardView(uid));
+}
+
+let handleRemoveMovieBtnPress = function (e) {
+    const uid = $('#uid').data('uid');
+    const movieName = $(e.target).data('name');
+    const movieTitle = $(`[name=${movieName}]`).text().split('Remove')[0];
+    const db = firebase.firestore();
+    const users = db.collection("users");
+    users.doc(uid).update({
+        watchlist: firebase.firestore.FieldValue.arrayRemove(movieTitle)
+    }).then(function () { $(`[name=${movieName}]`).remove() });
+
 }

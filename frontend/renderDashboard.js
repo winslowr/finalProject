@@ -8,14 +8,13 @@ window.onload = function () {
             location.href = 'login.html';
         } else {
             $('body').append(`<div id="uid" data-uid=${firebaseUser.uid}></div>`)  // empty div for accessing uid
-            // login button configuration
             $('#navbar').append(createNavbar);
             $('#userEmail').append(`<p>${firebaseUser.email}</p>`);
             $('#redirect').html("Logout");
             $('#redirect').attr('id', 'logout');
             $('#logout').on("click", handleLogoutBtnPress);
-            // friend finder setup
             $('#root').append(renderDashboardView(firebaseUser.uid));
+
             $('body').on('click', '#addFriend', handleAddFriendBtnPress);
             $('body').on('click', '#takeMatchTest', handleMatchTestBtnPress);
             $('body').on('change', '#movieSelection', handleMovieSelectionChange);
@@ -33,7 +32,7 @@ window.onload = function () {
 // RENDERING
 
 let renderDashboardView = function (uid) {
-    const dashboard = $('<div id="dashboard"></div>');
+    const dashboard = $('<div id="dashboardView"></div>');
     const section = $('<div id="topSection" class="section has-background-netflix"></div>');
     dashboard.append(section);
     section.append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
@@ -270,7 +269,7 @@ let handleAddFriendBtnPress = async function (e) {
 }
 
 let handleMatchTestBtnPress = async function (e) {
-    $('#dashboard').replaceWith(renderFormView());
+    $('#dashboardView').replaceWith(renderFormView());
     $('.movies').hide();
 }
 
@@ -336,3 +335,6 @@ let handleHideFriendsBtnPress = function (e) {
     }
     $('#hideFriends').replaceWith($('<button id="showFriends" class="button">Show Friends</button>'));
 }
+
+// DEBOUNCING
+

@@ -165,53 +165,13 @@ const renderSelected = function (movieIndex) {
 	`
 }
 
-const renderForm = function (userID) {
-	return `
-		<div class="column is-one-third">
-		<div class="select is-multiple">
-			<section class="hero is-danger is-bold">
-				<div hero-body>
-					<h1 class="title is-3 has-text-centered"> Select a movie you would watch with a friend! </h1>
-				</div>
-			</section>
-			<div id="selection">
-			<select class = "has-text-centered" id="userMovies" multiple size="20">
-				<option name="${movieTitles[0]}"> ${movieTitles[0]} </option>
-				<option name="${movieTitles[1]}"> ${movieTitles[1]} </option>
-				<option name="${movieTitles[2]}"> ${movieTitles[2]} </option>
-				<option name="${movieTitles[3]}"> ${movieTitles[3]} </option>
-				<option name="${movieTitles[4]}"> ${movieTitles[4]} </option>
-				<option name="${movieTitles[5]}"> ${movieTitles[5]} </option>
-				<option name="${movieTitles[6]}"> ${movieTitles[6]} </option>
-				<option name="${movieTitles[7]}"> ${movieTitles[7]} </option>
-				<option name="${movieTitles[8]}"> ${movieTitles[8]} </option>
-				<option name="${movieTitles[9]}"> ${movieTitles[9]} </option>
-				<option name="${movieTitles[10]}"> ${movieTitles[10]} </option>
-				<option name="${movieTitles[11]}"> ${movieTitles[11]} </option>
-				<option name="${movieTitles[12]}"> ${movieTitles[12]} </option>
-				<option name="${movieTitles[13]}"> ${movieTitles[13]} </option>
-				<option name="${movieTitles[14]}"> ${movieTitles[14]} </option>
-				<option name="${movieTitles[15]}"> ${movieTitles[15]} </option>
-				<option name="${movieTitles[16]}"> ${movieTitles[16]} </option>
-				<option name="${movieTitles[17]}"> ${movieTitles[17]} </option>
-				<option name="${movieTitles[18]}"> ${movieTitles[18]} </option>
-				<option name="${movieTitles[19]}"> ${movieTitles[19]} </option>
-			</select>
-			</div>
-
-			<input id="selectionDone" type="submit" value="Go Back">
-		  </div>
-		  </div>
-	`
-}
-
 let matches = [];
 
-let debounce = function(func, wait, immediate) {
+let debounce = function (func, wait, immediate) {
 	var timeout;
-	return function() {
+	return function () {
 		var context = this, args = arguments;
-		var later = function() {
+		var later = function () {
 			timeout = null;
 			if (!immediate) func.apply(context, args);
 		};
@@ -222,38 +182,38 @@ let debounce = function(func, wait, immediate) {
 	};
 };
 
-let search = debounce(function(event){
-	let text = event.target.value;	
+let search = debounce(function (event) {
+	let text = event.target.value;
 	getValues(text)
-	.then((list)=>{
-		if( list.length == 0){
-			$('#autocompleteUL').empty();
-			let item = "No matches found"
-			$('#autocompleteUL').append(item);
-		}else{
-			$('#autocompleteUL').empty();
-			for (let i = 0; i < list.length; i++) {
-				let item = renderListElement(list[i]);
+		.then((list) => {
+			if (list.length == 0) {
+				$('#autocompleteUL').empty();
+				let item = "No matches found"
 				$('#autocompleteUL').append(item);
+			} else {
+				$('#autocompleteUL').empty();
+				for (let i = 0; i < list.length; i++) {
+					let item = renderListElement(list[i]);
+					$('#autocompleteUL').append(item);
+				}
 			}
-		}
-	})
-	.catch(err=>console.warn(err));
+		})
+		.catch(err => console.warn(err));
 }, 600);
 
-let getValues = function(txt){
-	return new Promise((resolve, reject)=>{
+let getValues = function (txt) {
+	return new Promise((resolve, reject) => {
 		matches = [];
-		setTimeout((function(){
+		setTimeout((function () {
 			let t = '^' + this.toString();
-			let pattern = new RegExp(t, 'i'); 
+			let pattern = new RegExp(t, 'i');
 			let matches = movieTitles.filter(term => pattern.test(term));
 			resolve(matches);
 		}).bind(txt), 500);
 	})
 }
 
-let renderListElement = function(title){
+let renderListElement = function (title) {
 	return `
 	<li> ${title} </li>
 	`

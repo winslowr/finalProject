@@ -55,3 +55,8 @@ div.columns.is-multiline {
     background-color: white; 
     padding-bottom: 20px;
 }
+
+.card {
+    padding-top: 10px;
+    height: 520px;
+}

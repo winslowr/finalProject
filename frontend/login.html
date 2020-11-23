@@ -7,7 +7,7 @@
   <title>Login</title>
   <script src="node_modules/jquery/dist/jquery.js"> </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.css" />
-
+  <link rel="stylesheet" href="./style.css" />
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
@@ -35,10 +35,10 @@
 
 <body>
 
-  <section class="hero is-dark">
+  <section class="hero is-black">
     <div class="hero-body">
       <div class=container>
-        <h1 class="title is-1 has-text-danger has-text-centered"> Netflix Friend Finder</h1>
+        <h1 id="mainTitle" class="title is-1 has-text-centered">Netflix Friend Finder</h1>
       </div>
     </div>
   </section>
@@ -74,10 +74,10 @@
         </div>
         <div class="field">
           <p class="control">
-            <button id="login" class="button is-danger">
+            <button id="login" class="button">
               Login
             </button>
-            <button id="signup" class="button is-danger is-light">
+            <button id="signup" class="button">
               Sign Up
             </button>
           </p>

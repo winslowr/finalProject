@@ -18,3 +18,22 @@ div.columns.is-multiline {
     color: rgb(180, 29, 19);
     font-size: 70px; 
 }
+
+#searchBar {
+    background-color: rgb(180, 29, 19);
+    padding-left: 50px;
+    padding-top: 20px;
+}
+
+#searchForm{
+    width: 400px; 
+    height: 50px;
+    font-size: larger;
+}
+
+#autocompleteUL {
+    font-size: larger; 
+    width: 400px;
+    background-color: white; 
+    padding-bottom: 20px;
+}

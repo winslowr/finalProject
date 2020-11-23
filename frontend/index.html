@@ -43,13 +43,14 @@
     <section class="hero is-black">
       <div class="hero-body">
         <div class=container>
-          <h1 class="title is-1 has-text-centered" id="mainTitle"> Netflix Friend Finder</h1>
+          <h1 class="title is-1 has-text-centered" id="mainTitle">Netflix Friend Finder</h1>
         </div>
       </div>
     </section>
 
+    <div id="navbar"></div>
 
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <!-- <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item">
           <img src="https://about.netflix.com/images/logo.png">
@@ -72,7 +73,7 @@
             </a>
           </div>
           <div>
-            <input type="submit" value="test form button" id="testSubmit">
+            <!-- <input type="submit" value="test form button" id="testSubmit"> -->
           </div>
 
         </div>
@@ -80,13 +81,22 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <button style="background-color: rgb(180, 29, 19)" id="redirect" class="button is-danger">Login or Sign
+              <button style="background-color: rgb(180, 29, 19)" id="redirect" class="button">Login or Sign
                 Up</button>
             </div>
           </div>
         </div>
       </div>
     </nav>
+    <div id="searchBar">
+      <form>
+        <input type="search" placeholder="Search for new movies" id="searchForm">
+      </form>
+      <div>
+         <ul id="autocompleteUL">
+         </ul> 
+      </div>
+    </div>
 
 
 
@@ -98,7 +108,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <!-- Include links to JavaScript files below         -->
   <script src="data.js" type="module"></script>
-  <script src="script.js"></script>
+  <script src="script.js" type="module"></script>
 
 </body>
 

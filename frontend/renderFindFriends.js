@@ -7,42 +7,112 @@ window.onload = function () {
         if (!firebaseUser) {
             location.href = 'login.html';
         } else {
+            $('body').append(`<div id="uid" data-uid=${firebaseUser.uid}></div>`)  // empty div for accessing uid
             // login button configuration
             $('#navbar').append(createNavbar);
             $('#redirect').html("Logout");
             $('#redirect').attr('id', 'logout');
             $('#logout').on("click", handleLogoutBtnPress);
             // friend finder setup
-            renderDashboardView(firebaseUser.uid);
+            $('#root').append(renderDashboardView(firebaseUser.uid));
             $('body').on('click', '#addFriend', handleAddFriendBtnPress);
             $('body').on('click', '#takeMatchTest', handleMatchTestBtnPress);
+            $('body').on('change', '#movieSelection', handleMovieSelectionChange);
+            $('body').on('click', '#addMovie', handleAddToWatchlistBtnPress);
+            $('body').on('click', '#submitMovies', handleSaveWatchlistBtnPress);
+            $('body').on('click', '#cancel', handleCancelBtnPress);
         }
     });
+
 };
 
 let renderDashboardView = function (uid) {
-    $('#root').append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
-    $('#root').append(renderBottomSection(uid));
+    const dashboard = $('<div id="dashboard"></div>');
+    dashboard.append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
+    dashboard.append(renderBottomSection(uid));
+    return dashboard;
 }
 
 let renderFormView = function () {
-    const columns = $('<div class="columns"></div>');
+    const section = $('<div id="formView" class="section has-background-netflix"></div>');
+    const columns = $('<div class="columns is-centered"></div>');
+    section.append(columns);
     columns.append(renderSelectionPanel());
-    return columns;
+    columns.append(renderSelectionDetailPanel());
+    columns.append(renderSelectionControlPanel());
+    return section;
 }
 
 let renderSelectionPanel = function () {
     const column = $('<div class="column is-one-third"></div>');
     const div = $('<div class="select is-multiple"></div>');
     column.append(div);
-    div.append($(`<section class="hero is-danger is-bold">
-				    <div hero-body>
-					    <h1 class="title is-3 has-text-centered"> Select a movie you would watch with a friend! </h1>
-				    </div>
-			    </section>)`));
-    const select = $('<select class="is-hovered" multiple size="20"></select>');
+    const select = $(`<select id="movieSelection" class="is-hovered" multiple size=${movieObjects.length}></select>`);
     div.append(select);
-    movieObjects.forEach(movie => select.append(`<option value=${movie.title}>${movie.title}</option>`));
+    movieObjects.forEach(movie => select.append(`<option value=${movie.netflixid}>${movie.title}</option>`));
+    return column;
+}
+
+let renderSelectionDetailPanel = function () {
+    const column = $('<div class="column is-one-third"></div>');
+    movieObjects.forEach(movie => column.append($(
+        `<div id=${movie.netflixid} class="movies">
+            <div class="card" id="test">
+                <div class="container has-text-centered">
+                    <div class="card-image">
+                        <figure>
+                            <img src="${movie.image}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                </div>
+                 <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">${movie.title}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p> ${movie.synopsis}</p>
+                    </div>   
+                    <div>
+                        <p> <strong> Rating: </strong> ${movie.rating}</p> 
+                    </div>
+                    <div>
+                        <p> <strong> Runtime: </strong> ${movie.runtime}</p> 
+                    </div>
+                </div>
+            </div>
+        </div>`)));
+    return column;
+}
+
+let renderSelectionControlPanel = function () {
+    const column = $('<div class="column is-one-third"></div>');
+    const box = $('<div class="box"></div>');
+    column.append(box);
+    const columns = $('<div class="columns is-centered"></div>');
+    box.append(columns);
+    const column2 = $('<div class="column has-text-centered"></div>');
+    columns.append(column2);
+    column2.append($(
+        `<div class="field">
+             <div class="control">
+                <button id="addMovie" class="button is-link">Add Movie to Watchlist</button>
+            </div>
+        </div>`));
+    column2.append($(
+        `<div class="field">
+                 <div class="control">
+                    <button id="submitMovies" class="button is-link">Save Watchlist</button>
+                </div>
+            </div>`));
+    column2.append($(
+        `<div class="field">
+                         <div class="control">
+                            <button id="cancel" class="button is-link">Cancel</button>
+                        </div>
+                    </div>`));
+    column.append($('<div id="selections" class="box has-text-centered"><h1 class="subtitle">Watchlist</h1></div>'))
     return column;
 }
 
@@ -114,7 +184,6 @@ let handleAddFriendBtnPress = async function (e) {
     const uid = e.target.getAttribute('data-uid');
     const friendEmail = $('#enterEmail').val();
 
-    const app = firebase.app();
     const db = firebase.firestore();
     const users = db.collection("users");
 
@@ -141,5 +210,45 @@ let handleAddFriendBtnPress = async function (e) {
 }
 
 let handleMatchTestBtnPress = async function (e) {
-    $('#root').replaceWith(renderFormView());
+    $('#dashboard').replaceWith(renderFormView());
+    $('.movies').hide();
+}
+
+let handleMovieSelectionChange = function (e) {
+    const movieID = $('#movieSelection').val()[0];
+    $('.movies').hide();
+    $(`#${movieID}`).show();
+}
+
+let handleAddToWatchlistBtnPress = function (e) {
+    const movieID = $('#movieSelection').val()[0];
+    const movieObj = movieObjects.find(movie => movie.netflixid == movieID);
+    const selection = $(`<p class="movie-selection">${movieObj.title}</p>`);
+    selection.data('object', movieObj);
+    const selections = $('#selections');
+    if (!selections.text().includes(movieObj.title)) {
+        selections.append(selection);
+    }
+}
+
+let handleSaveWatchlistBtnPress = function (e) {
+    const selections = $('.movie-selection');
+    if (selections.length == 0) {  // if no movies have been added, do nothing
+        return;
+    }
+    const uid = $('#uid').data('uid');
+    let watchlist = [];
+    selections.each(function () {
+        const data = $(this).data('object');
+        watchlist.push(data.title);
+    });
+    const db = firebase.firestore();
+    const users = db.collection("users");
+    watchlist.forEach(movie => users.doc(uid).update({ "watchlist": firebase.firestore.FieldValue.arrayUnion(movie) }));
+    $('#formView').replaceWith(renderDashboardView(uid));
+}
+
+let handleCancelBtnPress = function (e) {
+    const uid = $('#uid').data('uid');
+    $('#formView').replaceWith(renderDashboardView(uid));
 }

@@ -10,7 +10,7 @@ window.onload = function () {
       const users = db.collection("users");
       users.doc(firebaseUser.uid).get().then(function (doc) {
         if (!doc.exists) {
-          users.doc(firebaseUser.uid).set({ email: firebaseUser.email, friends: [] })
+          users.doc(firebaseUser.uid).set({ email: firebaseUser.email, friends: [], watchlist: [] })
             .then(function () { location.href = 'index.html'; });
         } else {
           location.href = 'index.html';

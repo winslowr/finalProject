@@ -10,16 +10,16 @@ export const createNavbar = function () {
 
         <div id="" class="navbar-menu has-background-grey-dark">
         <div class="navbar-start">
-            <a id="home" class="navbar-item has-text-white">
+            <a id="home" href='index.html' class="navbar-item has-text-white">
             Home
             </a>
 
-            <a class="navbar-item has-text-white">
+            <a id="findFriends" class="navbar-item has-text-white">
             Find Friends
             </a>
 
             <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link has-text-white">
+            <a id="about" href='about.html' class="navbar-item has-text-white">
                 About
             </a>
             </div>
@@ -27,7 +27,7 @@ export const createNavbar = function () {
         <div class="navbar-end">
             <div class="navbar-item">
             <div class="buttons">
-                <button id="redirect" class="button is-danger">Click here to Login or Sign Up</button>
+                <button id="redirect" style="background-color: rgb(180, 29, 19)" class="button is-danger">Login or Sign Up</button>
             </div>
             </div>
         </div>

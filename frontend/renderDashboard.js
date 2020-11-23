@@ -3,11 +3,14 @@ import { movieObjects } from './data.js';
 
 window.onload = function () {
 
-    firebase.auth().onAuthStateChanged(firebaseUser => {
+    firebase.auth().onAuthStateChanged(async function (firebaseUser) {
         if (!firebaseUser) {
             location.href = 'login.html';
         } else {
-            $('body').append(`<div id="uid" data-uid=${firebaseUser.uid}></div>`)  // empty div for accessing uid
+            $('body').append(`<div id="uid" data-uid=${firebaseUser.uid}></div>`);  // empty div for accessing uid
+            const allUsers = await getAllUsers();
+            $('body').append(`<div id="allUsers"></div>`);  // empty div for accessing users
+            $('#allUsers').data('users', allUsers);
             $('#navbar').append(createNavbar);
             $('#userEmail').append(`<p>${firebaseUser.email}</p>`);
             $('#redirect').html("Logout");
@@ -24,6 +27,8 @@ window.onload = function () {
             $('body').on('click', '.removeMovie', handleRemoveMovieBtnPress);
             $('body').on('click', '#showFriends', handleShowFriendsBtnPress);
             $('body').on('click', '#hideFriends', handleHideFriendsBtnPress);
+            $('body').on('input', '#enterEmail', handleFriendInputAutocomplete);
+            $('body').on('click', '.panel-block', handleAutocompleteSuggestionBtnPress);
         }
     });
 
@@ -205,6 +210,7 @@ function renderFindFriendsBox(uid) {
             <div class="control">
                 <input id="enterEmail" class="input" type="email" placeholder="Enter your friend's email">
             </div>
+            <nav class="panel" id="autocomplete"></nav>
         </div>`);
     container.append(`
         <div class="field">
@@ -336,5 +342,79 @@ let handleHideFriendsBtnPress = function (e) {
     $('#hideFriends').replaceWith($('<button id="showFriends" class="button">Show Friends</button>'));
 }
 
-// DEBOUNCING
+let handleFriendInputAutocomplete = function (e) {
+    const allUsers = $('#allUsers').data('users');
+    search(e.target.value, allUsers);
+}
 
+let handleAutocompleteSuggestionBtnPress = function (e) {
+    const suggestion = $(e.target);
+    $('#enterEmail').val(suggestion.text());
+    $('#autocomplete').hide();
+}
+
+// AUTOCOMPLETE 
+
+const getAllUsers = async function () {
+    const db = firebase.firestore();
+    const users = db.collection("users");
+    const query = await users.get();
+    let allUsers = []
+    query.forEach(doc => {
+        let email = doc.data().email;
+        if (doc.id !== $('#uid').data('uid')) {
+            allUsers.push(email);
+        }
+    });
+    return allUsers;
+}
+
+let debounce = function (func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+let search = debounce(function (text, searchArray) {
+    getValues(text, searchArray)
+        .then((list) => {
+            if (list.length == 0) {
+                $('#autocomplete').empty();
+                let item = "No matches found"
+                $('#autocomplete').append(item);
+                $('#autocomplete').show();
+            } else if (list.length == searchArray.length) {
+                $('#autocomplete').empty();
+                $('#autocomplete').hide();
+            } else {
+                $('#autocomplete').empty();
+                for (const email of list) {
+                    let item = $(`<a id=${email} class="panel-block">${email}</a>`);
+                    $('#autocomplete').append(item);
+                }
+                $('#autocomplete').show();
+            }
+        })
+        .catch(err => console.warn(err));
+}, 600);
+
+let getValues = function (txt, searchArray) {
+    return new Promise((resolve, reject) => {
+        let matches = [];
+        setTimeout((function () {
+            let t = '^' + this.toString();
+            let pattern = new RegExp(t, 'i');
+            let matches = searchArray.filter(term => pattern.test(term));
+            resolve(matches);
+        }).bind(txt), 100);
+    })
+}

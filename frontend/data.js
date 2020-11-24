@@ -63,13 +63,14 @@ async function fetchMoviesJSON() {
 			"x-rapidapi-key": "1119f077a7msh6ed3381feb84700p1e65c9jsn0a49cf7dca25",
 			"x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com"
 		}
-	})
+	});
 	const obj = await response.json();
 	return obj;
 }
 
 fetchMoviesJSON().then(obj => {
 	let items = obj.ITEMS;
+	console.log(items);
 	items = items.sort((a, b) => {   // Sort movies newest first
 		let dateA = Date.parse(a.unogsdate);
 		let dateB = Date.parse(b.unogsdate);

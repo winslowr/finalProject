@@ -18,8 +18,6 @@ window.onload = function () {
       });
     }
   });
-
-
 };
 
 let handleLoginBtnPress = function () {

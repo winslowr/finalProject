@@ -57,7 +57,7 @@ function cardCreator(movie) {
 }
 
 async function fetchMoviesJSON() {
-	const response = await fetch("https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?q=get%3Anew7%3AUS&p=1&t=ns&st=adv", {
+	const response = await fetch("https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?q=get%3Anew11%3AUS&p=1&t=ns&st=adv", {
 		"method": "GET",
 		"headers": {
 			"x-rapidapi-key": "1119f077a7msh6ed3381feb84700p1e65c9jsn0a49cf7dca25",

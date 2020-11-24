@@ -49,7 +49,7 @@ function cardCreator(movie) {
 
 					<div class="content">
 						<p> ${movie.synopsis}<br></p>
-						<p> <strong>${movie.unogsdate}</strong></p>
+						<p><strong>New On: ${movie.unogsdate}</strong></p>
 					</div>
 				</div>
 			</div>

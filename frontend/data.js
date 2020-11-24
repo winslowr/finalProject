@@ -48,7 +48,8 @@ function cardCreator(movie) {
 					</div>
 
 					<div class="content">
-						<p> ${movie.synopsis}</p>
+						<p> ${movie.synopsis}<br></p>
+						<p> <strong>${movie.unogsdate}</strong></p>
 					</div>
 				</div>
 			</div>
@@ -70,6 +71,7 @@ async function fetchMoviesJSON() {
 
 fetchMoviesJSON().then(obj => {
 	let items = obj.ITEMS;
+	console.log(items);
 	console.log(items);
 	items = items.sort((a, b) => {   // Sort movies newest first
 		let dateA = Date.parse(a.unogsdate);

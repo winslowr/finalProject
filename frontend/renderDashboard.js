@@ -38,7 +38,7 @@ window.onload = function () {
 
 let renderDashboardView = function (uid) {
     const dashboard = $('<div id="dashboardView"></div>');
-    const section = $('<div id="topSection" class="section has-background-netflix"></div>');
+    const section = $('<div id="topSection" style="min-height: 600px" class="section has-background-netflix"></div>');
     dashboard.append(section);
     section.append(renderTopSection(uid)); // have to pass user info in this way since it cant be done through handler
     section.append(renderWatchlist(uid));
@@ -56,9 +56,11 @@ let renderFormView = function () {
 }
 
 let renderSelectionPanel = function () {
-    const column = $('<div class="column is-one-third"></div>');
+    const column = $('<div class="column is-one-third has-text-centered"></div>');
+    const box = $('<div class="box"></div>');
+    column.append(box);
     const div = $('<div class="select is-multiple"></div>');
-    column.append(div);
+    box.append(div);
     const select = $(`<select id="movieSelection" class="is-hovered" multiple size=${movieObjects.length}></select>`);
     div.append(select);
     movieObjects.forEach(movie => select.append(`<option value=${movie.netflixid}>${movie.title}</option>`));
